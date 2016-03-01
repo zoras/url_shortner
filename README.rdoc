@@ -1,0 +1,15 @@
+== README
+
+This is an App to generate short url for provided long url.
+
+Run `rake db:setup` then `rails s` and visit `localhost:3000`
+
+Once the app starts you're shown the new short url page where you can enter long url and desired short url. Both long_url and short_url should be unique and present. To check if the url is valid, I've used `net/http, uri` method. It checks 10 times if the generated short_url is already present and creates new one.
+
+If you don't enter short url then new short url is generated using `SecureRandom.urlsafe_base64` method.
+
+Once the short url is created, you can visit the short url and it is redirected to the actual url when visited and each visit is logged with a counter `usage_count`.
+
+`whenever` is used cron job to `prune_stale_records` after 15 days.
+
+API can be used to create short_url using `curl -d "http://localhost:3000/short_urls#new?long_url='http://google.com'&shortened_url='googl"`
